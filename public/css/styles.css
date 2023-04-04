@@ -1,0 +1,31 @@
+.table-beauty {
+    margin: 6.6%;
+    font-size: 1.8em;
+    min-width: 400px;
+    border-collapse: collapse;
+}
+
+.table-beauty thead tr {
+    background-color: #e65913;
+    color: #ffffff;
+    text-align: left;
+}
+
+.table-beauty tbody tr {
+    border-bottom: 2px solid #9c9c9c;
+}
+
+.table-beauty th,
+.table-beauty td {
+    padding: 12px 15px;
+}
+
+button {
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: bolder;
+}
+
+button:hover {
+    background-color: #f07c2e;
+}

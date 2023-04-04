@@ -1,0 +1,14 @@
+{
+  "name": "evotebct",
+  "version": "1.0.0",
+  "description": "A voting application that uses Blockchain.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error!\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.15.2"
+  },
+  "author": "Kartikeya",
+  "license": ""
+}

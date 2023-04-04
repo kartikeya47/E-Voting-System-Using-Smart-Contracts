@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>E-Voting Portal Using Ethereum Blockchain</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body style="font-family: sans-serif;">
+    <center>
+        <h1 style="font-size: 3.2em">E-Voting Portal Using Ethereum Blockchain</h1>
+        <table class="table-beauty">
+            <thead>
+                <tr>
+                    <th>Candidate Name</th>
+                    <th>Votes</th>
+                    <th>Vote Button</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th id="person1">Candidate 1</th>
+                    <td id="person1votes">0</td>
+                    <td><button onclick="letsVote(1)">Vote for Me</button></td>
+                </tr>
+                <tr>
+                    <th id="person2">Candidate 2</th>
+                    <td id="person2votes">0</td>
+                    <td><button onclick="letsVote(2)">Vote for Me</button></td>
+                </tr>
+                <tr>
+                    <th id="person3">Candidate 3</th>
+                    <td id="person3votes">0</td>
+                    <td><button onclick="letsVote(3)">Vote for Me</button></td>
+                </tr>
+                <tr>
+                    <th id="person4">Candidate 4</th>
+                    <td id="person4votes">0</td>
+                    <td><button onclick="letsVote(4)">Vote for Me</button></td>
+                </tr>
+                <tr>
+                </tr>
+            </tbody>
+        </table>
+        </br>
+    </center>
+
+    <footer style="text-align: center;color:rgb(39, 39, 39)">
+        <p>Created by <a target="_blank" style="text-decoration:none"
+                href="https://in.linkedin.com/in/kartikeya-rawat-5a38181b3">Kartikeya Rawat</a></p>
+    </footer>
+
+    <script src="js/smartcontractfile.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+
+    <script>
+        var con;
+        async function metaMaskTest() {
+            if (window.ethereum) {
+                window.web3 = new Web3(window.ethereum);
+                try {
+                    await ethereum.enable();
+                    return true;
+                } catch (error) {
+                    return false;
+                }
+            }
+            else if (window.web3) {
+                window.web3 = new Web3(web3.currentProvider);
+                return true;
+            }
+            else {
+                console.log('This is not an Ethereum Browser!!');
+                return false;
+            }
+        }
+
+        $(document).ready(async function () {
+            var meta = await metaMaskTest();
+            if (meta) {
+                con = await web3.eth.contract(ABIForSmartContract).at(AddressForSmartContract);
+                candi(1);
+                candi(2);
+                candi(3);
+                candi(4);
+                console.log('con: ', con);
+                console.log("Metamask is Detected!!")
+            } else {
+                console.log("Metamask is not Detected!!");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Not Detected',
+                    text: 'Metamask is not Detected!!',
+                    onClose() {
+                        location.reload();
+                    }
+                });
+            }
+        });
+
+        async function candi(person) {
+            await con.candis(person, function (err, ans) {
+                if (!err) {
+                    console.log("ans: ", ans);
+                    document.getElementById("person" + person).innerHTML = ans[1];
+                    document.getElementById("person" + person + "votes").innerHTML = ans[2].toNumber();
+                }
+            })
+        }
+        async function letsVote(person) {
+            await con.votingCandi(person, function (err, ans) {
+                if (!err) {
+                    console.log("Voting is Working!!");
+                }
+                else {
+                    console.log("Voting is not Working!!");
+                }
+            })
+        }
+
+    </script>
+</body>
+
+</html>
